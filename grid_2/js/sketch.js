@@ -1,16 +1,18 @@
 
-let grid;
+let grid, grid0;
 
 function setup() {
   createCanvas(701, 701);   
   colorMode(HSB);
   ellipseMode(CORNER);
   //grid = new Grid(10,10, drawConeShape);
+  grid0 = new Grid(50,50, drawDiagonalLine0);
   grid = new Grid(25,25, drawDiagonalLine);
 }
 
 function draw() {
   background(0);
+  grid0.draw();
   grid.draw();
   noLoop();
 }
@@ -49,11 +51,11 @@ function drawDiagonalLine(x,y,w,h) {
   strokeWeight(fatLine ? 10 : 5);
 
   if(fatLine) {
-    stroke(150,80,70);
+    stroke(150,80,80);
     strokeCap(ROUND);
   }
   else {
-    stroke(20);
+    stroke(25);
     strokeCap(SQUARE);
   }
 
@@ -62,7 +64,29 @@ function drawDiagonalLine(x,y,w,h) {
   }else {
     line(w,0,0,h);
   }
+}
 
+function drawDiagonalLine0(x,y,w,h) {
+  translate(x, y);
+
+  let fatLine = coinFlip(-0.25);
+
+  strokeWeight(fatLine ? 6 : 3);
+
+  if(fatLine) {
+    stroke(150,80,35);
+    strokeCap(ROUND);
+  }
+  else {
+    stroke(10);
+    strokeCap(SQUARE);
+  }
+
+  if(coinFlip()) {
+    line(0,0, w,h);
+  }else {
+    line(w,0,0,h);
+  }
 }
 
 function coinFlip(bias) {
