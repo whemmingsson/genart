@@ -13,17 +13,19 @@ function setup() {
   //grid = new Grid(25,25, SHAPES.drawDiagonalLine);
 
   //Multiple diagonal lines per cell
-  grid = new Grid(2,2);
+  grid0 = new Grid(30,30, SHAPES.drawDiagonalLines0);
+  grid = new Grid(15,15, SHAPES.drawDiagonalLines);
 }
 
 function draw() {
-  background(255);
+  background(0);
   
   /*
   grid0.draw();
   grid.draw();
   */
 
+ // grid0.draw();
   grid.draw();
 
 

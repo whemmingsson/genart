@@ -75,14 +75,105 @@ const SHAPES = {
         }
       },
 
-      drawDiagonalLines : () => {
+      drawDiagonalLines : (x,y,w,h) => {
+          const count = 4;
+          const stepSizeX = (w) / count;
+          const stepSizeY = (h) / count;
 
+          translate(x, y);
+          stroke(100);
+          strokeWeight(2);
+          strokeCap(PROJECT);
+
+          const maybeColorLine = () => {
+            if(SHAPES.helpers.percentChance(10)) {
+                stroke(0,100,100);
+            }
+            else {
+                stroke(100);
+            }
+          }
+
+          const loop = (drawFunc) => {
+            for(let i = 0; i < count; i++){
+                maybeColorLine();
+                drawFunc(i);
+            }
+          }
+
+          switch(SHAPES.helpers.randomInt(1,4)) {
+            // Top-left
+            case 1: loop((i) => line(w - i * stepSizeX, 0, 0 , h - i * stepSizeY)); break;
+
+            // Top-right
+            case 2: loop((i) => line(0 + i * stepSizeX, 0, w, h - i * stepSizeY)); break;
+
+            // Bottom-left
+            case 3: loop((i) => line(0, i * stepSizeY, w - i * stepSizeX, h)); break;
+
+            // Bottom-right
+            case 4: loop((i) => line(w, 0 + i * stepSizeY, 0 + i*stepSizeX , h)); break;           
+          }
       },
+
+      drawDiagonalLines0 : (x,y,w,h) => {
+        const count = 5;
+        const stepSizeX = (w) / count;
+        const stepSizeY = (h) / count;
+
+        translate(x, y);
+
+        const fatLine = SHAPES.helpers.coinFlip(-0.45);
+    
+        strokeWeight(fatLine ? 2 : 1);
+        strokeCap(PROJECT);
+        stroke(75);
+
+        const quadrant = SHAPES.helpers.randomInt(1,4);
+        switch(quadrant) {
+            // Top-left
+            case 1:
+              for(let i = 0; i < count; i++){
+                  line(w - i * stepSizeX, 0, 0 , h - i*stepSizeY);
+              }
+              break;
+
+            // Top-right
+            case 2:
+              for(let i = 0; i < count; i++){
+                  line(0 + i * stepSizeX, 0, w, h - i * stepSizeY);
+              }
+              break;
+
+             // Bottom-left
+             case 3:
+              for(let i = 0; i < count; i++){
+                  line(0, i*stepSizeY, w - i * stepSizeX, h);
+              }
+              break;
+
+             // Bottom-right
+             case 4:
+              for(let i = 0; i < count; i++){
+                  line(w, 0 + i * stepSizeY, 0 + i*stepSizeX , h);
+              }
+              break;
+          
+        }
+    },
 
       helpers : {
          coinFlip : (bias) => {
             if(!bias) bias = 0;
             return random(1,2) < 1.5 + bias;
+          },
+
+          randomInt : (min, max) => {
+            return Math.round(random(min, max));
+          },
+
+          percentChance : (percent) => {
+              return SHAPES.helpers.randomInt(0,100) < percent;
           }
       }
 }
