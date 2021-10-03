@@ -3,11 +3,10 @@ class Grid {
     constructor(xTileCount, yTilesCount, tileDrawFunc){
         this.w = xTileCount;
         this.h = yTilesCount;
-        this.tileSizeWidth = (width-1) / this.w;
-        this.tileSizeHeight = (height-1) / this.h;
+        this.tileSizeWidth = (width) / this.w;
+        this.tileSizeHeight = (height) / this.h;
         this.tileDrawFunc = tileDrawFunc || this._getDefaultTileDrawFunc();
     }
-
 
     _getDefaultTileDrawFunc() {
         return (x,y,w,h) => {
